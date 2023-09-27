@@ -36,5 +36,5 @@ addGithubPackagesRepository()
 kmmbridge {
     mavenPublishArtifacts()
     spm()
-//    cocoapods("git@github.com:touchlab/PodSpecs.git")
+    cocoapods("git@github.com:findjigar/kmmbridge-start-podspecs.git")
 }
