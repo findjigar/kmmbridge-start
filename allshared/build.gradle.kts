@@ -3,6 +3,7 @@ plugins {
     kotlin("multiplatform")
     id("co.touchlab.kmmbridge")
     id("co.touchlab.skie")
+    kotlin("native.cocoapods")
     `maven-publish`
 }
 
@@ -14,8 +15,16 @@ kotlin {
         iosX64(),
         iosArm64(),
         iosSimulatorArm64()
-    ).forEach {
-        it.binaries.framework {
+    )
+
+    cocoapods {
+        summary = "KMMBridgeStart"
+        homepage = "https://www.touchlab.co"
+        ios.deploymentTarget = "13.5"
+        extraSpecAttributes["libraries"] = "'c++', 'sqlite3'"
+        license = "BSD"
+        extraSpecAttributes.put("swift_version", "\"5.0\"") // <- SKIE Needs this!
+        framework {
             export(project(":analytics"))
             isStatic = true
         }
