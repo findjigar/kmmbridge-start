@@ -22,14 +22,13 @@ jobs:
       - name: Echo group name
         run: echo "${{ steps.group-name.outputs.propVal }}"
       - name: Is Touchlab group name
-        id: is_touchlab_group
-        run: core.setOutput('propVal', contains(steps.group-name.outputs.propVal, 'co.touchlab'))
-#        run: echo "is_touchlab_group=${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}" >> $GITHUB_ENV
+#        id: is_touchlab_group
+        run: echo "is_touchlab_group=${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}" >> $GITHUB_ENV
       - name: Echo is TL group
-        run: echo "${{ steps.is_touchlab_group.outputs.propVal }}"
+        run: echo "$is_touchlab_group"
       - name: Check org name if touchlab group
         id: is_tl_org
-        if: steps.is_touchlab_group.outputs.is_touchlab_group == 'true'
+        if: $is_touchlab_group == 'true'
         run: echo "is_tl_org=${{ contains(github.repository, 'findjigar/') }}" >> $GITHUB_ENV
       - name: Fail if it's not a TL org
         if: steps.is_tl_org.outputs['is_tl_org'] == 'false'
