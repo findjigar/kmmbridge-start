@@ -23,6 +23,11 @@ jobs:
         env:
           IS_FINDJIGAR: ${{ contains(github.repository, 'findjigar/') }}
         run: echo "$IS_FINDJIGAR"
+      - name: Org and Group name check
+        if: ${{ !(contains(github.repository, 'findjigar/') && contains(steps.group-name.outputs.propVal, 'co.findjigar'))}}
+        run: |
+          echo "::error file=gradle.properties::Make sure to change GROUP name"
+          core.setFailed()
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
