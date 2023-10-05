@@ -23,9 +23,10 @@ jobs:
         run: echo "${{ steps.group-name.outputs.propVal }}"
       - name: Is Touchlab group name
         id: is_touchlab_group
-        run: echo "is_touchlab_group=${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}" >> $GITHUB_ENV
+        run: core.setOutput('propVal', contains(steps.group-name.outputs.propVal, 'co.touchlab'))
+#        run: echo "is_touchlab_group=${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}" >> $GITHUB_ENV
       - name: Echo is TL group
-        run: echo "${{ steps.is_touchlab_group.outputs.is_touchlab_group }}"
+        run: echo "${{ steps.is_touchlab_group.outputs.propVal }}"
       - name: Check org name if touchlab group
         id: is_tl_org
         if: steps.is_touchlab_group.outputs.is_touchlab_group == 'true'
