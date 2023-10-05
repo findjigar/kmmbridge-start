@@ -28,7 +28,7 @@ jobs:
         run: echo "$is_touchlab_group"
       - name: Check org name if touchlab group
         id: is_tl_org
-        if: $is_touchlab_group == 'true'
+        if: env.is_touchlab_group == 'true'
         run: echo "is_tl_org=${{ contains(github.repository, 'findjigar/') }}" >> $GITHUB_ENV
       - name: Fail if it's not a TL org
         if: steps.is_tl_org.outputs['is_tl_org'] == 'false'
