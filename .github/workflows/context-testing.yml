@@ -4,6 +4,8 @@ on: push
 jobs:
   dump_contexts_to_log:
     runs-on: ubuntu-latest
+    env:
+      INVALID_GROUP: false
     steps:
       - name: Dump GitHub context
         env:
@@ -19,12 +21,15 @@ jobs:
           property: GROUP
       - name: Echo group name
         run: echo "${{ steps.group-name.outputs.propVal }}"
-      - name: Github repo Org is findjigar
-        env:
-          IS_FINDJIGAR: ${{ contains(github.repository, 'findjigar/') }}
-        run: echo "$IS_FINDJIGAR"
-      - name: Org and Group name check
-        if: ${{ !(contains(github.repository, 'findjigar/') && contains(steps.group-name.outputs.propVal, 'co.findjigar'))}}
+      - name: Is Touchlab group name
+        id: is_touchlab_group
+        run: echo "::set-output name=is_touchlab_group::${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}"
+      - name: Check org name if touchlab group
+        id: is_tl_org
+        if: steps.is_touchlab_group.outputs.is_touchlab_group == 'true'
+        run: echo "::set-output name=is_tl_org::${{ contains(github.repository, 'findjigar/') }}"
+      - name: Fail if it's not a TL org
+        if: steps.is_tl_org.outputs.is_tl_org == 'false'
         run: |
           echo "::error file=gradle.properties::Make sure to change GROUP name"
           core.setFailed()
