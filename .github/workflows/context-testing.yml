@@ -31,7 +31,7 @@ jobs:
         if: env.is_touchlab_group == 'true'
         run: echo "is_tl_org=${{ contains(github.repository, 'findjigar/') }}" >> $GITHUB_ENV
       - name: Fail if it's not a TL org
-        if: steps.is_tl_org.outputs['is_tl_org'] == 'false'
+        if: env.is_tl_org == 'false'
         run: |
           echo "::error file=gradle.properties::Make sure to change GROUP name"
           core.setFailed()
