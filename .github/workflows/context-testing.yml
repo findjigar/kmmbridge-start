@@ -9,10 +9,13 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - uses: touchlab/read-property@0.1
+      - name: Checkout the repo
+        uses: actions/checkout@v2
+      - name: Read property
+        uses: touchlab/read-property@0.1
         id: group-name
         with:
-          file: ./../../gradle.properties
+          file: ./gradle.properties
           property: GROUP
       - name: Echo group name
         run: echo "${{ steps.group-name.outputs.propVal }}"
