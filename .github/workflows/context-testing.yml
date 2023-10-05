@@ -23,13 +23,13 @@ jobs:
         run: echo "${{ steps.group-name.outputs.propVal }}"
       - name: Is Touchlab group name
         id: is_touchlab_group
-        run: echo "::set-output name=is_touchlab_group::${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}"
+        run: echo "is_touchlab_group=${{ contains(steps.group-name.outputs.propVal, 'co.touchlab') }}" >> $GITHUB_ENV
       - name: Check org name if touchlab group
         id: is_tl_org
-        if: steps.is_touchlab_group.outputs.is_touchlab_group == 'true'
-        run: echo "::set-output name=is_tl_org::${{ contains(github.repository, 'findjigar/') }}"
+        if: steps.is_touchlab_group.outputs['is_touchlab_group'] == 'true'
+        run: echo "is_tl_org=${{ contains(github.repository, 'findjigar/') }}" >> $GITHUB_ENV
       - name: Fail if it's not a TL org
-        if: steps.is_tl_org.outputs.is_tl_org == 'false'
+        if: steps.is_tl_org.outputs['is_tl_org'] == 'false'
         run: |
           echo "::error file=gradle.properties::Make sure to change GROUP name"
           core.setFailed()
