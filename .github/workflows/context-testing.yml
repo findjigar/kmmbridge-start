@@ -12,7 +12,7 @@ jobs:
       - uses: touchlab/read-property@0.1
         id: group-name
         with:
-          file: ./../gradle.properties
+          file: ./../../gradle.properties
           property: GROUP
       - name: Echo group name
         run: echo "${{ steps.group-name.outputs.propVal }}"
