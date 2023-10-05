@@ -9,10 +9,10 @@ jobs:
         env:
           GITHUB_CONTEXT: ${{ toJson(github) }}
         run: echo "$GITHUB_CONTEXT"
-      - name: Github repo Org
+      - name: Github repo Org is findjigar
         env:
-          REPO_NAME: ${{ github.repository }}
-        run: echo "$REPO_NAME"
+          IS_FINDJIGAR: ${{ contains(github.repository, 'findjigar/') }}
+        run: echo "$IS_FINDJIGAR"
       - name: Dump job context
         env:
           JOB_CONTEXT: ${{ toJson(job) }}
