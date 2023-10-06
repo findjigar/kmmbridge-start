@@ -1,14 +1,14 @@
 Pod::Spec.new do |spec|
     spec.name                     = 'allshared'
     spec.version                  = '0.1'
-    spec.homepage                 = ''
+    spec.homepage                 = 'https://www.touchlab.co'
     spec.source                   = { :http=> ''}
     spec.authors                  = ''
-    spec.license                  = ''
-    spec.summary                  = ''
+    spec.license                  = 'BSD'
+    spec.summary                  = 'KMMBridgeStart'
     spec.vendored_frameworks      = 'build/cocoapods/framework/allshared.framework'
-    spec.libraries                = 'c++'
                 
+    spec.ios.deployment_target = '13.5'
                 
                 
     spec.pod_target_xcconfig = {
@@ -35,5 +35,6 @@ Pod::Spec.new do |spec|
             SCRIPT
         }
     ]
-                
+    spec.libraries = 'c++', 'sqlite3'
+    spec.swift_version = "5.0"
 end
